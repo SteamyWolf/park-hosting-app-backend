@@ -1,11 +1,20 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require("cors");
-
-// routes imports
-const placesRoute = require('./routes/places');
+const serviceAccount = require('./firebase-adminsdk.json');
 dotenv.config();
 
+// ROUTES IMPORTS
+const placesRoute = require('./routes/places');
+
+// FIREBASE
+const admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://park-host.firebaseio.com' // Replace with your database URL
+});
+
+// EXPRESS AND PORT INSTANCIATION
 const app = express();
 const PORT = process.env.PORT || 3000;
 
